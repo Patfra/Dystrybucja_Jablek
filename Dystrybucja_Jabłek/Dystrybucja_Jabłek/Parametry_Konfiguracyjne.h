@@ -4,5 +4,6 @@ class Parametry_Konfiguracyjne
 public:
 	Parametry_Konfiguracyjne();
 	~Parametry_Konfiguracyjne();
+	int  eloo;
 };
 
