@@ -118,11 +118,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Parametry_Konfiguracyjne.h" />
+    <ClInclude Include="Configuration_Parameters.h" />
+    <ClInclude Include="Problem_Data.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Configuration_Parameters.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Parametry_Konfiguracyjne.cpp" />
+    <ClCompile Include="Problem_Data.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,7 +5,7 @@
 #include <fstream>
 #include <conio.h>
 using namespace std;
-class Parametry_Konfiguracyjne
+class Problem_Data
 {
 public:
 
@@ -19,9 +19,10 @@ public:
 	double *** customerPrices;
 	int *** customerOrders;
 
-	Parametry_Konfiguracyjne();
-	~Parametry_Konfiguracyjne();
-	Parametry_Konfiguracyjne( string filename );
+	Problem_Data();
+	~Problem_Data();
+	Problem_Data( string filename );
+
 
 };
 
