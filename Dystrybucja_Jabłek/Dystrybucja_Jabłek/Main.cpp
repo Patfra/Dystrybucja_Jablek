@@ -1,11 +1,9 @@
-#ifndef PROBLEM_DATA
-#include "Problem_Data.h"
-#define PROBLEM_DATA
+#ifndef SPECIMEN
+#include "Specimen.h"
+#define SPECIMEN
 #endif
-#ifndef CONF_PARAM
-#include "Configuration_Parameters.h"
-#define CONF_PARAM
-#endif
+#include <list>
+#include <random>
 #define CONF_END 10
 #define DATA_END 4
 //Sprawdza czy z klawiatury wpisano liczbê czy nie
@@ -17,8 +15,71 @@ bool is_number(const string& s)
 	return !s.empty() && it == s.end();
 }
 
+void writeParameters(Problem_Data * data, Configuration_Parameters * conf)
+{
+	cout << conf->mutationFactor << " ";
+	cout << conf->populationAmount << " ";
+	cout << conf->breedAmount << " ";
+	cout << conf->iterationON << " ";
+	cout << conf->iteration << " ";
+	cout << conf->margin << " ";
+	cout << conf->marginRange << endl;
+
+	cout << data->chambersCapasity << " ";
+	cout << data->chambersAmount << " ";
+	cout << data->customersAmount << " ";
+	cout << data->speciesAmount << endl;
+	for (int i = 0; i < data->speciesAmount; i++)
+	{
+		for (int j = 0; j < 12; j++)
+			cout << data->marketPrices[i][j] << " ";
+		cout << endl;
+	}
+	for (int k = 0; k < data->customersAmount; k++)
+	{
+		for (int i = 0; i < data->speciesAmount; i++)
+		{
+			for (int j = 0; j < 12; j++)
+				cout << data->customerPrices[k][i][j] << " ";
+			cout << endl;
+		}
+	}
+	for (int k = 0; k < data->customersAmount; k++)
+	{
+		for (int i = 0; i < data->speciesAmount; i++)
+		{
+			for (int j = 0; j < 12; j++)
+				cout << data->customerPrices[k][i][j] << " ";
+			cout << endl;
+		}
+	}
+	for (int j = 0; j < 12; j++)
+		cout << data->chambersKeepCosts[j] << " ";
+	cout << endl;
+}
+void initSpecimen(Specimen *nspec, minstd_rand0 *generator)
+{
+	for (int j = 0; j < 12; j++)//miesi¹ce
+	{		
+		for (int i = 0; i < nspec->speciesAmount; i++)//gatunki
+		{
+			for (int k = 0; k < nspec->customersAmount; k++)//odbiorcy
+			{
+				nspec->genome[k][i][j] = (*generator)() % (j + 2);
+				cout << nspec->genome[k][i][j] << "";
+			}
+		}
+	}
+	cout << endl;
+}
+
 int main()
 {
+	// Generator liczb pseudolosowych
+	minstd_rand0 generator;
+	generator.seed(0);
+	cout << generator();
+	// Zmienne
 	bool stop = false , repeat = false;
 	int test;
 	string confFile, dataFile;
@@ -27,7 +88,7 @@ int main()
 	//==============================================================================
 	//Poprawne wczytanie numeru pliku konfiguracyjnego
 	do {
-		cout << "Podaj numer pliku konfiguracyjnego (1 -" << CONF_END << " ):   ";
+		cout << "Podaj numer pliku konfiguracyjnego (1 - " << CONF_END << " ):   ";
 		cin >> confFile;
 		repeat = (!is_number(confFile) || (1 > stoi(confFile) || CONF_END < stoi(confFile)));
 		if(repeat)
@@ -35,11 +96,10 @@ int main()
 	} while (repeat);
 	repeat = false;
 	confFile = "Conf_" + confFile + ".csv";
-	cout << confFile << endl;
 	//==============================================================================
 	//Poprawne wczytanie numeru pliku z danymi
 	do {
-		cout << "Podaj numer pliku z danymi (1 -" << DATA_END << " ):   ";
+		cout << "Podaj numer pliku z danymi (1 - " << DATA_END << " ):   ";
 		cin >> dataFile;
 		repeat = (!is_number(dataFile) || (1 > stoi(dataFile) || DATA_END < stoi(dataFile)));
 		if (repeat)
@@ -47,22 +107,26 @@ int main()
 	} while (repeat);
 	repeat = false;
 	dataFile = "Problem_" + dataFile + ".csv";
-	cout << dataFile << endl;
 	conf = new Configuration_Parameters(confFile);
-	cout << conf->mutationFactor << endl;	
-	cout << conf->populationAmount << endl;
-	cout << conf->breedAmount << endl;
-	cout << conf->iterationON << endl;
-	cout << conf->iteration << endl;
-	cout << conf->margin << endl;
-	cout << conf->marginRange << endl;
 	data = new Problem_Data(dataFile);
-
+	writeParameters(data, conf);
+	//Generacja Pokolenia
+	list<Specimen> generation;
+	Specimen *nSpecimen;
+	nSpecimen = new Specimen(data);
+	for(int i = 0; i < conf->populationAmount; i++)
+	{
+		//tworze nowego osobnika
+		initSpecimen(nSpecimen, &generator);
+		generation.push_back(*nSpecimen);
+	}
 
 	delete conf;
+	delete data;
 	do {
-
+		// Iteracje, mutacje, krzy¿owanie, funkcja celu, zapis danych do pliku
 	} while ( !_getch() );
+
 	return 0;
 }
 

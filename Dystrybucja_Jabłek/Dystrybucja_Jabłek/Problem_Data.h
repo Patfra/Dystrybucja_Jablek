@@ -13,10 +13,9 @@ public:
 	int chambersAmount;
 	int customersAmount;
 	int speciesAmount;
-	int palletsCapacity;
-	double chambersKeepCosts[12];
-	double (* marketPrices)[12];
-	double *** customerPrices;
+	int chambersKeepCosts[12];
+	int ** marketPrices;
+	int *** customerPrices;
 	int *** customerOrders;
 
 	Problem_Data();

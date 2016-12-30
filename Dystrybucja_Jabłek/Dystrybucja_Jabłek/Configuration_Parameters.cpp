@@ -34,7 +34,6 @@ Configuration_Parameters::Configuration_Parameters(string filename)
 	
 	//Wczytujê i interpretujê drugi wiersz
 	File >> line;
-	cout << line << endl;
 	int dane_it = 0;
 	string::const_iterator it = line.begin();
 	while (line.end() != it)
@@ -65,5 +64,5 @@ Configuration_Parameters::Configuration_Parameters(string filename)
 
 Configuration_Parameters::~Configuration_Parameters()
 {
-	cout << "Destruktor obiektu Problem_Data" << endl;
+	cout << "Destruktor obiektu Configuration_Parameters" << endl;
 }
