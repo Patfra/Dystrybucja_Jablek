@@ -12,6 +12,7 @@ public:
 	int ** bought;
 	int ** warehouseState;
 	Specimen(Problem_Data *data);
+	Specimen(const Specimen & nspec);
 	Specimen();
 	~Specimen();
 };

@@ -195,7 +195,7 @@ Problem_Data::Problem_Data(string filename)
 				{
 					getline(File, tmp, ';');
 					//cout << tmp << " ";
-					customerPrices[k][i][j] = stoi(tmp);
+					customerOrders[k][i][j] = stoi(tmp);
 				}
 				//cout << endl;
 				//ignorujê pozosta³e znaki w lini je¿eli jakieœ s¹
