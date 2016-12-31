@@ -20,7 +20,7 @@ void initSpecimen(Specimen *nspec, minstd_rand0 *generator);
 //Wylicza funkcjê celu, kary i pomocnicze wartoœci
 void countParameters(Specimen *spec, const Problem_Data *dane);
 //Operatory krzy¿owania
-void cross1(Specimen * nspec, list<Specimen>::iterator * parent1, list<Specimen>::iterator * parent2, minstd_rand0 *generator);
-void cross2(Specimen * nspec, list<Specimen>::iterator * parent1, list<Specimen>::iterator * parent2, minstd_rand0 *generator);
+void cross1(Specimen * child1, Specimen * child2, list<Specimen>::iterator * parent1, list<Specimen>::iterator * parent2, minstd_rand0 *generator);
+void cross2(Specimen * child1, Specimen * child2, list<Specimen>::iterator * parent1, list<Specimen>::iterator * parent2, minstd_rand0 *generator);
 //Operatory mutacji
 void mutate(Specimen * spec, Configuration_Parameters *conf, minstd_rand0 *generator);

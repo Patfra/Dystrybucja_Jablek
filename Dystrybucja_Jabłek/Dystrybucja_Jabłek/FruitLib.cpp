@@ -231,29 +231,31 @@ void countParameters(Specimen *spec, const Problem_Data *dane)
 
 
 //Operatory krzy¿owania
-void cross1(Specimen * nspec, list<Specimen>::iterator * parent1, list<Specimen>::iterator * parent2, minstd_rand0 *generator)
+void cross1(Specimen * child1, Specimen * child2, list<Specimen>::iterator * parent1, list<Specimen>::iterator * parent2, minstd_rand0 *generator)
 {
 	//zerowanie funkcji celu, kary i liczby mutaji
-	nspec->profit = 0;
-	nspec->punishment = 0;
-	nspec->mutationAmount = 0;
+	child1->profit = child2->profit = 0;
+	child1->punishment= child2->punishment = 0;
+	child1->mutationAmount = child2->mutationAmount = 0;
 	//krzy¿owanie
 	for (int j = 0; j < 12; j++)//miesi¹ce
 	{
-		for (int i = 0; i < nspec->speciesAmount; i++)//gatunki
+		for (int i = 0; i < child1->speciesAmount; i++)//gatunki
 		{
-			for (int k = 0; k < nspec->customersAmount; k++)//odbiorcy
+			for (int k = 0; k < child1->customersAmount; k++)//odbiorcy
 			{
 				switch ((*generator)() % 2)
 				{
 				case 0://geny od pierwszego rodzica
 					{
-						nspec->genome[k][i][j] = parent1->_Ptr->_Myval.genome[k][i][j];
+						child1->genome[k][i][j] = parent1->_Ptr->_Myval.genome[k][i][j];
+						child2->genome[k][i][j] = parent2->_Ptr->_Myval.genome[k][i][j];
 						break;
 					}
 				case 1://geny od drugiego rodzica
 					{
-						nspec->genome[k][i][j] = parent2->_Ptr->_Myval.genome[k][i][j];
+						child1->genome[k][i][j] = parent2->_Ptr->_Myval.genome[k][i][j];
+						child2->genome[k][i][j] = parent1->_Ptr->_Myval.genome[k][i][j];
 						break;
 					}
 				default:
@@ -263,7 +265,7 @@ void cross1(Specimen * nspec, list<Specimen>::iterator * parent1, list<Specimen>
 		}
 	}
 }
-void cross2(Specimen * nspec, list<Specimen>::iterator * parent1, list<Specimen>::iterator * parent2)
+void cross2(Specimen * child1, Specimen * child2, list<Specimen>::iterator * parent1, list<Specimen>::iterator * parent2, minstd_rand0 *generator)
 {
 
 }
@@ -278,7 +280,11 @@ void mutate(Specimen * spec, Configuration_Parameters *conf, minstd_rand0 *gener
 			for (int k = 0; k < spec->customersAmount; k++)//odbiorcy
 			{			
 				if ((*generator)() < generator->max() *conf->mutationFactor)
-					spec->genome[k][i][j] = (*generator)() % (j + 2);
+				{
+					spec->genome[k][i][j] = (*generator)() % (j + 2); //mutacja
+					spec->mutationAmount++;  //zwiêkszenie liczby mutacji
+				}
+
 				
 			}
 		}

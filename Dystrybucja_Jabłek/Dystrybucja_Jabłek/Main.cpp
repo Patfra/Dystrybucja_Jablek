@@ -2,7 +2,7 @@
 #include "FruitLib.h"
 #define FRUIT
 #endif
-
+using namespace std;
 int main()
 {
 	// Generator liczb pseudolosowych
@@ -73,11 +73,14 @@ int main()
 	int iteracje = 0;
 	list<Specimen>::iterator it1;
 	list<Specimen>::iterator it2;
-	while (iteracje < 1)
+	list<Specimen> breed; //potomstwo
+	Specimen *child1 = new Specimen(data) , *child2 = new Specimen(data); //wskaŸniki na nowyh potomków
+	int weakest = conf->breedAmount*(conf->breedAmount - 1);
+	while (iteracje < conf->iteration)
 	{
 		it1 = generation.begin();
 		it2 = generation.begin();
-		// Iteracje, mutacje, krzy¿owanie, funkcja celu, zapis danych do pliku
+		//mutacje, krzy¿owanie, funkcja celu
 		for (int parent1 = 0; parent1 < conf->breedAmount; parent1++)
 		{
 			it1++;
@@ -85,33 +88,76 @@ int main()
 			it1--;
 			for (int parent2 = parent1 + 1; parent2 < conf->breedAmount; parent2++)
 			{
-				cross1(nSpecimen, &it1, &it2, &generator);
-				mutate(nSpecimen, conf, &generator);
-				countParameters(nSpecimen, data);
-				cout << nSpecimen->profit <<" "<< nSpecimen->punishment << endl;
+				cross1(child1, child2, &it1, &it2, &generator);
+				mutate(child1, conf, &generator);
+				mutate(child2, conf, &generator);
+				countParameters(child1, data);
+				countParameters(child2, data);
+				//cout << child1->profit <<" "<< child1->punishment << endl;
+				//cout << child2->profit << " " << child2->punishment << endl;
+				breed.push_back(*child1);
+				breed.push_back(*child2);
 				it2 ++ ;
 			}
 			it1++;
-		}
-		cout << endl;
-		iteracje++;
-	} 
+		}		
+		//Do³¹czanie nowych osobników do populacji + sortowanie i eliminacja najs³abszych
+		while (!breed.empty())
+		{
+			nSpecimen = &(breed.back());
+			it = generation.begin();
+			while (it != generation.end() && it->profit > nSpecimen->profit)
+			{
+				it++;
+			}
+			if (it == generation.end())
+				generation.push_back(*nSpecimen);
+			else
 
+				generation.insert(it, *nSpecimen);
+			breed.pop_back();
+		}
+		//Eliminacja najs³abszych
+		for (int i = 0; i < weakest; i++)
+			generation.pop_back();
+		// Iteracje
+		iteracje++;		
+		cout.precision(0);
+		cout << (iteracje)* 100 / conf->iteration << "\%" << endl;
+	} 
+	//Ostatnie pokolenie
 	it = generation.begin();
 	while (it != generation.end())
 	{
-		cout << it->profit << endl;
+		cout << it->profit  << endl;
 		it++;
 	}
+	//Najlepszy osobnik
+	for (int i = 0; i < generation.front().customersAmount; i++)
+	{		
+		for (int j = 0; j < generation.front().speciesAmount; j++)
+		{			
+			for (int k = 0; k < 12; k++)
+			{
+				cout << generation.front().genome[i][j][k] << " ";
+			}
+			cout << endl;
+		}
+		 cout << endl;
+	}
+
 
 	do 
 	{
 		// Iteracje, mutacje, krzy¿owanie, funkcja celu, zapis danych do pliku
 	} while (!_getch());
-	delete nSpecimen;
+	delete child1;
+	delete child2;
 	delete conf;
 	delete data;
 	generation.clear();
+
+	breed.clear();
 
 	return 0;
 }
