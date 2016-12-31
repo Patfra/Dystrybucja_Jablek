@@ -119,11 +119,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Configuration_Parameters.h" />
+    <ClInclude Include="FruitLib.h" />
     <ClInclude Include="Problem_Data.h" />
     <ClInclude Include="Specimen.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Configuration_Parameters.cpp" />
+    <ClCompile Include="FruitLib.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Problem_Data.cpp" />
     <ClCompile Include="Specimen.cpp" />
