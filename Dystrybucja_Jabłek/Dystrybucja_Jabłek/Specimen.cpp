@@ -123,3 +123,8 @@ Specimen::~Specimen()
 	}
 	delete[] warehouseState;
 }
+
+void Specimen::write2stream(ostream *stream)
+{
+	*stream << profit << ";" << punishment << ";" << mutationAmount << ";";
+}

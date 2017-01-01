@@ -15,5 +15,6 @@ public:
 	Specimen(const Specimen & nspec);
 	Specimen();
 	~Specimen();
+	void write2stream(ostream *stream);
 };
 

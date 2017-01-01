@@ -7,7 +7,7 @@ int main()
 {
 	// Generator liczb pseudolosowych
 	minstd_rand0 generator;
-	generator.seed(0);	
+	generator.seed(100);	
 	// Zmienne
 	bool stop = false , repeat = false;
 	string confFile, dataFile;
@@ -37,7 +37,11 @@ int main()
 	dataFile = "Problem_" + dataFile + ".csv";
 	conf = new Configuration_Parameters(confFile);
 	data = new Problem_Data(dataFile);
-	//writeParameters(data, conf);
+	//Pliki wyjœciowe                                 trza tu poprawiæ by by³y daty
+
+	ofstream Out("Out_1.csv", fstream::out);
+	ofstream Solution("Solution_1.csv", fstream::out);
+
 	//Generacja Pokolenia
 	list<Specimen> generation;
 	list<Specimen>::iterator it;
@@ -120,8 +124,12 @@ int main()
 		//Eliminacja najs³abszych
 		for (int i = 0; i < weakest; i++)
 			generation.pop_back();
-		// Iteracje
+		// Iteracje i zapis do pliku
 		iteracje++;		
+		Out << iteracje << ";";
+		generation.front().write2stream(&Out);
+		generation.back().write2stream(&Out);
+		Out << endl;
 		cout.precision(0);
 		cout << (iteracje)* 100 / conf->iteration << "\%" << endl;
 	} 
@@ -140,10 +148,13 @@ int main()
 			for (int k = 0; k < 12; k++)
 			{
 				cout << generation.front().genome[i][j][k] << " ";
+				Solution << generation.front().genome[i][j][k] << ";";
 			}
 			cout << endl;
+			Solution << endl;
 		}
 		 cout << endl;
+		 Solution << endl;
 	}
 
 
@@ -151,6 +162,8 @@ int main()
 	{
 		// Iteracje, mutacje, krzy¿owanie, funkcja celu, zapis danych do pliku
 	} while (!_getch());
+	Out.close();
+	Solution.close();
 	delete child1;
 	delete child2;
 	delete conf;
