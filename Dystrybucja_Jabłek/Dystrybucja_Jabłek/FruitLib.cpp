@@ -75,7 +75,6 @@ void countParameters(Specimen *spec, const Problem_Data *dane)
 	//zerowanie funkcji celu, kary i liczby mutaji
 	spec->profit = 0;
 	spec->punishment = 0;
-	spec->mutationAmount = 0;
 	//zerowanie tablic
 	for (int j = 0; j < 12; j++)//miesi¹ce
 	{
@@ -272,7 +271,7 @@ void cross2(Specimen * child1, Specimen * child2, list<Specimen>::iterator * par
 //Operatory mutacji
 void mutate(Specimen * spec, Configuration_Parameters *conf, minstd_rand0 *generator)
 {
-	
+	spec->mutationAmount = 0;
 	for (int j = 0; j < 12; j++)//miesi¹ce
 	{
 		for (int i = 0; i < spec->speciesAmount; i++)//gatunki
@@ -282,7 +281,7 @@ void mutate(Specimen * spec, Configuration_Parameters *conf, minstd_rand0 *gener
 				if ((*generator)() < generator->max() *conf->mutationFactor)
 				{
 					spec->genome[k][i][j] = (*generator)() % (j + 2); //mutacja
-					spec->mutationAmount++;  //zwiêkszenie liczby mutacji
+					spec->mutationAmount ++;  //zwiêkszenie liczby mutacji
 				}
 
 				
