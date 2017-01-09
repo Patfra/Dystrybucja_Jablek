@@ -1,16 +1,15 @@
-#ifndef FRUIT
 #include "FruitLib.h"
-#define FRUIT
-#endif
+
 using namespace std;
-int main()
+int main(int argc, char* args[])
 {
+	
 	// Generator liczb pseudolosowych
 	minstd_rand0 generator;
 	generator.seed(100);	
 	// Zmienne
 	bool stop = false , repeat = false;
-	string confFile, dataFile;
+	string confFile, dataFile, OutFile, SolutionFile;
 	Problem_Data * data;
 	Configuration_Parameters * conf;
 	//==============================================================================
@@ -34,13 +33,16 @@ int main()
 			cout << "Zle dane!!" << endl;
 	} while (repeat);
 	repeat = false;
+	OutFile = dataFile;
+	SolutionFile = dataFile;
 	dataFile = "Problem_" + dataFile + ".csv";
 	conf = new Configuration_Parameters(confFile);
 	data = new Problem_Data(dataFile);
 	//Pliki wyjœciowe                                 trza tu poprawiæ by by³y daty
-
-	ofstream Out("Out_1.csv", fstream::out);
-	ofstream Solution("Solution_1.csv", fstream::out);
+	OutFile = "Out_" + OutFile + ".csv";
+	SolutionFile = "Solution_" + SolutionFile + ".csv";
+	ofstream Out((OutFile).c_str(), fstream::out);
+	ofstream Solution((SolutionFile).c_str(), fstream::out);
 
 	//Generacja Pokolenia
 	list<Specimen> generation;
@@ -80,6 +82,7 @@ int main()
 	list<Specimen> breed; //potomstwo
 	Specimen *child1 = new Specimen(data) , *child2 = new Specimen(data); //wskaŸniki na nowyh potomków
 	int weakest = conf->breedAmount*(conf->breedAmount - 1);
+	int theSame; // liczba osobnikow o takiej samej wartosci funkcji celu
 	while (iteracje < conf->iteration)
 	{
 		it1 = generation.begin();
@@ -106,6 +109,7 @@ int main()
 			it1++;
 		}		
 		//Do³¹czanie nowych osobników do populacji + sortowanie i eliminacja najs³abszych
+		theSame = 0;
 		while (!breed.empty())
 		{
 			nSpecimen = &(breed.back());
@@ -117,18 +121,22 @@ int main()
 			if (it == generation.end())
 				generation.push_back(*nSpecimen);
 			else
-
-				generation.insert(it, *nSpecimen);
+			{
+				if (it->profit != nSpecimen->profit)
+					generation.insert(it, *nSpecimen);
+				else
+					theSame++;
+			}
 			breed.pop_back();
 		}
 		//Eliminacja najs³abszych
-		for (int i = 0; i < weakest; i++)
+		for (int i = 0; i < weakest - theSame; i++)
 			generation.pop_back();
 		// Iteracje i zapis do pliku
 		iteracje++;		
-		Out << iteracje << ";";
-		generation.front().write2stream(&Out);
-		generation.back().write2stream(&Out);
+		Out << iteracje << ",";
+		generation.front().write2stream(&Out, ',');
+		generation.back().write2stream(&Out, ',');
 		Out << endl;
 		cout.precision(0);
 		cout << (iteracje)* 100 / conf->iteration << "\%" << endl;
@@ -160,7 +168,6 @@ int main()
 
 	do 
 	{
-		// Iteracje, mutacje, krzy¿owanie, funkcja celu, zapis danych do pliku
 	} while (!_getch());
 	Out.close();
 	Solution.close();

@@ -68,7 +68,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Users\Patryk\Desktop\MMWD\Dystrybucja_Jabłek\Dystrybucja_Jabłek\SDL2-2.0.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Patryk\Desktop\MMWD\Dystrybucja_Jabłek\Dystrybucja_Jabłek\SDL2-2.0.5\lib\x86;C:\Users\Patryk\Desktop\MMWD\Dystrybucja_Jabłek\Dystrybucja_Jabłek\SDL2-2.0.5\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -77,6 +80,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -129,6 +133,13 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Problem_Data.cpp" />
     <ClCompile Include="Specimen.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Conf_1.csv" />
+    <None Include="Problem_1.csv" />
+    <None Include="Problem_2.csv" />
+    <None Include="Problem_3.csv" />
+    <None Include="Problem_4.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

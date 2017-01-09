@@ -124,7 +124,7 @@ Specimen::~Specimen()
 	delete[] warehouseState;
 }
 
-void Specimen::write2stream(ostream *stream)
+void Specimen::write2stream(ostream *stream, char separator)
 {
-	*stream << profit << ";" << punishment << ";" << mutationAmount << ";";
+	*stream << profit << separator << punishment << separator << mutationAmount << separator;
 }

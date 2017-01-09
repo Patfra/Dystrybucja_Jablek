@@ -45,4 +45,21 @@
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Conf_1.csv">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="Problem_1.csv">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="Problem_2.csv">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="Problem_3.csv">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+    <None Include="Problem_4.csv">
+      <Filter>Pliki zasobów</Filter>
+    </None>
+  </ItemGroup>
 </Project>

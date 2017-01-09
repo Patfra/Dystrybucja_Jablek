@@ -1,0 +1,17 @@
+Pojemnoœæ;Liczba Przechowlni;odbiorcy;gatunki;;Paleta;;;;;;;;;;
+300;10;2;2;;300;;;;;;;;;;
+paŸdziernik;listopad;grudzieñ;styczeñ;luty;marzec;kwiecieñ;maj;czerwiec;lipiec;sierpieñ;wrzesieñ;;ceny na wolnym rynku;;
+360;369;375;378;384;399;420;450;510;525;540;549;gat1;;;
+330;339;345;348;354;369;390;420;480;495;510;519;gat2;;;
+;;;;;;;;;;;;;ceny u obiorców;;
+390;399;405;408;414;429;450;480;540;555;570;579;gat1;Odbiorca1;;
+354;363;369;372;378;393;414;444;504;519;534;543;gat2;;;
+375;384;390;393;399;414;435;465;525;540;555;564;gat1;Odbiorca2;;
+375;384;390;393;399;414;435;465;525;540;555;564;gat2;;;
+;;;;;;;;;;;;;zamowienia;;
+50;55;60;65;70;75;70;65;60;55;50;45;gat1;Odbiorca1;;720
+50;55;60;65;70;75;70;65;60;55;50;45;gat2;;;720
+100;100;100;100;100;100;100;100;100;100;100;100;gat1;Odbiorca2;;1200
+150;150;150;150;150;200;200;150;150;150;150;150;gat2;;;1900
+paŸdziernik;listopad;grudzieñ;styczeñ;luty;marzec;kwiecieñ;maj;czerwiec;lipiec;sierpieñ;wrzesieñ;;Koszty;;4540
+4500;4000;3500;3200;3800;4200;4600;4900;5200;5500;5000;4500;;Za jedn¹ przechowalniê;;
